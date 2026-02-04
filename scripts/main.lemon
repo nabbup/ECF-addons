@@ -31,7 +31,34 @@ function void S3C_drawECFIcons()
 
 function bool LevelSelect.innerUpdate()
 {
-	S3C_drawECFIcons()
+	if (Mods.isModActive("Sonic 3 Complete Level Select+"))
+		S3C_drawECFIcons()
 	return base.LevelSelect.innerUpdate()
+}
+
+// fix issues from altered sound test position with S3C+
+//# address-hook(0x007e64) end(0x007f1e)
+//# translated(0x007f46) end(0x007f60)
+function void fn007e64()
+{
+	if (Mods.isModActive("Sonic 3 Complete Level Select+"))
+	{
+		if (levelselect.selection == 0x20 && (control.pad1.pressed & CONTROL_C))
+		{
+			u8 backup = levelselect.selection
+			levelselect.selection = 0
+			base.fn007e64()
+			levelselect.selection = backup
+			return
+		}
+		else if (levelselect.selection == 0x22 && (control.pad1.pressed & CONTROL_C))
+		{
+			ECF_disableBranchBase = true
+			base.fn007e64()
+			ECF_disableBranchBase = false
+			return
+		}
+	}
+	base.fn007e64()
 }
 #endif

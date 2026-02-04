@@ -1,0 +1,37 @@
+#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
+function void LevelSelect_drawECFIcons()
+{
+	if (Mods.isModActive("Sonic 3 Complete Level Select+"))
+		return
+	base.LevelSelect_drawECFIcons()
+}
+
+function void S3C_drawECFIcons()
+{
+	string id = levelselect_ExChar_P1_id
+	string name = getECFCharNameAtId(id)
+	if (name == "")
+		return
+
+	u8 lselect_icon_offset
+	if (getScreenWidth() > 320)
+	{
+		lselect_icon_offset = 0
+	}
+	else
+	{
+		lselect_icon_offset = 6
+	}
+	// lemons problems require lemons solutions.
+	s16 px = getScreenExtend() + 263 + lselect_icon_offset
+	s16 py = 107
+	Renderer.setViewport(px-16, py+8, 16, 16, 0xfffc)
+	ECF_drawCharSelectSprIcons(name, id, px, py, 0xfffd)
+}
+
+function bool LevelSelect.innerUpdate()
+{
+	S3C_drawECFIcons()
+	return base.LevelSelect.innerUpdate()
+}
+#endif

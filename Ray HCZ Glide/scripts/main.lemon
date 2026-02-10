@@ -1,0 +1,9 @@
+#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
+//# address-hook(0x0067ee) end(0x0069b6)
+function void fn0067ee()
+{
+	base.fn0067ee()
+	if (global.zone_act == 0x0100 && (isECFCharA1("ECC-Ray") || isECFCharA1("JUWL-Ray")) && objA1.state == char.state.FALLING_PANIC) // is the ID meant to be JUWL or Juwl for post-launch Juwl Characters?
+		u8[A1 + 0x40] = 0x01
+}
+#endif

@@ -1,0 +1,18 @@
+{
+	"Metadata":
+	{
+		"Name": "ECF - Juwl Ray Glide in HCZ1",
+		"UniqueID": "nabbup-ecf-ray-hcz",
+		"Author": "Ramona (nabbup)",
+		"Description": "Lets Ray perform a glide in the HCZ1 intro because it's cool.",
+		"GameVersion": "25.12.31.0"
+	},
+	"OtherMods":
+	{
+		"extra-character-framework":
+		{
+			"Priority": "Lower",
+			"IsRequired": "true"
+		},
+	}
+}

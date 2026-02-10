@@ -1,0 +1,18 @@
+{
+	"Metadata":
+	{
+		"Name": "ECF - Proto Slot Machine Icons",
+		"UniqueID": "nabbup-ecf-proto-slots",
+		"Author": "Ramona (nabbup)",
+		"Description": "Apply the prototype slot icons for ECF characters without the use of Lemons' renderhook mod.\nPlace this mod above all ECF characters to ensure the mod works as it should.",
+		"GameVersion": "25.12.31.0"
+	},
+	"OtherMods":
+	{
+		"extra-character-framework":
+		{
+			"Priority": "Lower",
+			"IsRequired": "true"
+		},
+	}
+}

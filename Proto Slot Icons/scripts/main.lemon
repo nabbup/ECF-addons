@@ -1,0 +1,10 @@
+#if EXTRA_CHARACTER_FRAMEWORK_ACTIVE
+function string Lemons_getSlotIcon(u8 i)
+{
+	string basekey = base.Lemons_getSlotIcon(i)
+	string newkey = stringformat("%s_alt", basekey)
+	if (Renderer.hasCustomSprite(newkey))
+		return newkey
+	return basekey
+}
+#endif

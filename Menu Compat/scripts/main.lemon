@@ -61,4 +61,21 @@ function void fn007e64()
 	}
 	base.fn007e64()
 }
+
+function void ECF_drawCharSelectSprIcons(string name, u16 id, s16 px, s16 py, u16 renderQueue)
+{
+	if (ECF.dontRenderIcons() && global.game_mode == 0x4c)
+		return
+	base.ECF_drawCharSelectSprIcons(name, id, px, py, renderQueue)
+}
+
+function bool ECF.dontRenderIcons()
+{
+	if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") != 0) // Alternate Data Select
+		return true
+	if (System.getGlobalVariableValueByName("lsds.nodetail") != 0) // Data Select Options
+		return true
+	return false
+}
+
 #endif

@@ -69,6 +69,56 @@ function void ECF_drawCharSelectSprIcons(string name, u16 id, s16 px, s16 py, u1
 	base.ECF_drawCharSelectSprIcons(name, id, px, py, renderQueue)
 }
 
+function bool Standalone.onWriteToSpriteTable(s16 px, s16 py, u16 renderQueue)
+{
+	if (objA0.update_address == 0x00d42c)
+	{
+		// Why must I do this.
+		string name
+		string id
+		if (objA0.update_address == 0x00d30c)
+		{
+			id = noSave_ExChar_P1_id
+			name = getECFCharNameAtId(id)
+		}
+		else
+		{
+			u8 read = (A0.u16 - 0xb0de) / 0x4a
+		#if GAMEAPP >= 0x26012400
+			name = ECF_Save_str[read - 1]
+			id = ECF_Save_num[read - 1]
+		#else
+			name = System.getGlobalVariableValueByName(stringformat("ECF_Save%d_P1", read)) 
+			id = System.getGlobalVariableValueByName(stringformat("ECF_Save%d_P1_id", read))
+		#endif
+		}
+		if (name)
+		{
+			u8 amount = 0
+			if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") == 2) // Alternate Data Select
+				amount = 0x80
+			else if (System.getGlobalVariableValueByName("lsds.nodetail") != 0 && objA0.update_address == 0x00d42c) // Data Select Options
+				amount = 0x10
+			py -= amount
+			bool base = base.Standalone.onWriteToSpriteTable(px, py, renderQueue)
+			py += amount
+			return base
+		}
+	}
+	return base.Standalone.onWriteToSpriteTable(px, py, renderQueue)
+}
+
+function void ECF_drawCharSelectSpr(string name, u16 id, s16 px, s16 py, u16 renderQueue)
+{
+	u8 amount = 0
+	if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") == 2) // Alternate Data Select
+		amount = 0x80
+	else if (System.getGlobalVariableValueByName("lsds.nodetail") != 0 && objA0.update_address == 0x00d42c) // Data Select Options
+		amount = 0x10
+	py += amount
+	base.ECF_drawCharSelectSpr(name, id, px, py, renderQueue)
+}
+
 function bool ECF.dontRenderIcons()
 {
 	if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") != 0) // Alternate Data Select

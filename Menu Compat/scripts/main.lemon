@@ -29,10 +29,16 @@ function void S3C_drawECFIcons()
 	ECF_drawCharSelectSprIcons(name, id, px, py, 0xfffd)
 }
 
+global bool KeepThisOnHereSpecificallyPlease
+
 function bool LevelSelect.innerUpdate()
 {
 	if (Mods.isModActive("Sonic 3 Complete Level Select+"))
+	{
+		KeepThisOnHereSpecificallyPlease = true
 		S3C_drawECFIcons()
+		KeepThisOnHereSpecificallyPlease = false
+	}
 	return base.LevelSelect.innerUpdate()
 }
 
@@ -64,7 +70,7 @@ function void fn007e64()
 
 function void ECF_drawCharSelectSprIcons(string name, u16 id, s16 px, s16 py, u16 renderQueue)
 {
-	if (ECF.dontRenderIcons() && global.game_mode == 0x4c)
+	if (ECF.dontRenderIcons() && !KeepThisOnHereSpecificallyPlease)
 		return
 	base.ECF_drawCharSelectSprIcons(name, id, px, py, renderQueue)
 }

@@ -8,8 +8,8 @@ function void LevelSelect_drawECFIcons()
 
 function void S3C_drawECFIcons()
 {
-	string id = levelselect_ExChar_P1_id
-	string name = getECFCharNameAtId(id)
+	string id = levelselect.characters - CHARS_KNUCKLES_AND_TAILS
+	string name = getECFCharNameAtId(global_ExChar_num[0])
 	if (name == "")
 		return
 
@@ -77,26 +77,21 @@ function void ECF_drawCharSelectSprIcons(string name, u16 id, s16 px, s16 py, u1
 
 function bool Standalone.onWriteToSpriteTable(s16 px, s16 py, u16 renderQueue)
 {
-	if (objA0.update_address == 0x00d42c)
+	if (objA0.update_address == 0x00d42c || objA0.update_address == 0x00d30c)
 	{
 		// Why must I do this.
 		string name
 		string id
 		if (objA0.update_address == 0x00d30c)
 		{
-			id = noSave_ExChar_P1_id
+			id = ECF_NoSave_num
 			name = getECFCharNameAtId(id)
 		}
 		else
 		{
 			u8 read = (A0.u16 - 0xb0de) / 0x4a
-		#if GAMEAPP >= 0x26012400
 			name = ECF_Save_str[read - 1]
 			id = ECF_Save_num[read - 1]
-		#else
-			name = System.getGlobalVariableValueByName(stringformat("ECF_Save%d_P1", read)) 
-			id = System.getGlobalVariableValueByName(stringformat("ECF_Save%d_P1_id", read))
-		#endif
 		}
 		if (name)
 		{

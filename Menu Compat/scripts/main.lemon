@@ -98,8 +98,6 @@ function bool Standalone.onWriteToSpriteTable(s16 px, s16 py, u16 renderQueue)
 			u8 amount = 0
 			if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") == 2) // Alternate Data Select
 				amount = 0x80
-			else if (System.getGlobalVariableValueByName("lsds.nodetail") != 0 && objA0.update_address == 0x00d42c) // Data Select Options
-				amount = 0x10
 			py -= amount
 			bool base = base.Standalone.onWriteToSpriteTable(px, py, renderQueue)
 			py += amount
@@ -114,8 +112,6 @@ function void ECF_drawCharSelectSpr(string name, u16 id, s16 px, s16 py, u16 ren
 	u8 amount = 0
 	if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") == 2) // Alternate Data Select
 		amount = 0x80
-	else if (System.getGlobalVariableValueByName("lsds.nodetail") != 0 && objA0.update_address == 0x00d42c) // Data Select Options
-		amount = 0x10
 	py += amount
 	base.ECF_drawCharSelectSpr(name, id, px, py, renderQueue)
 }
@@ -123,8 +119,6 @@ function void ECF_drawCharSelectSpr(string name, u16 id, s16 px, s16 py, u16 ren
 function bool ECF.dontRenderIcons()
 {
 	if (System.getGlobalVariableValueByName("AlternateDataSelect.presentation") != 0) // Alternate Data Select
-		return true
-	if (System.getGlobalVariableValueByName("lsds.nodetail") != 0) // Data Select Options
 		return true
 	return false
 }

@@ -25,20 +25,27 @@ function void S3C_drawECFIcons()
 	// lemons problems require lemons solutions.
 	s16 px = getScreenExtend() + 263 + lselect_icon_offset
 	s16 py = 107
+	if (Mods.isModActive("data-select-options") && Mods.isModActive("thorn-originsresolution"))
+		py += (getScreenHeight()-224)/2
 	Renderer.setViewport(px-16, py+8, 16, 16, 0xfffc)
+	
+	// forcing variables a bit for S3CLS+ so it gets the icons to show up regardless of what outside forces there are
+	u8 dsotemp = System.getGlobalVariableValueByName("lsds.nodetail")
+	u8 adstemp = System.getGlobalVariableValueByName("AlternateDataSelect.presentation")
+	
+	System.setGlobalVariableValueByName("lsds.nodetail", 0)
+	System.setGlobalVariableValueByName("AlternateDataSelect.presentation", 0)
+	
 	ECF_drawCharSelectSprIcons(name, id, px, py, 0xfffd)
+	
+	System.setGlobalVariableValueByName("lsds.nodetail", dsotemp)
+	System.setGlobalVariableValueByName("AlternateDataSelect.presentation", adstemp)
 }
-
-global bool KeepThisOnHereSpecificallyPlease
 
 function bool LevelSelect.innerUpdate()
 {
 	if (Mods.isModActive("Sonic 3 Complete Level Select+"))
-	{
-		KeepThisOnHereSpecificallyPlease = true
 		S3C_drawECFIcons()
-		KeepThisOnHereSpecificallyPlease = false
-	}
 	return base.LevelSelect.innerUpdate()
 }
 
@@ -70,7 +77,7 @@ function void fn007e64()
 
 function void ECF_drawCharSelectSprIcons(string name, u16 id, s16 px, s16 py, u16 renderQueue)
 {
-	if (ECF.dontRenderIcons() && !KeepThisOnHereSpecificallyPlease)
+	if (ECF.dontRenderIcons())
 		return
 	base.ECF_drawCharSelectSprIcons(name, id, px, py, renderQueue)
 }
